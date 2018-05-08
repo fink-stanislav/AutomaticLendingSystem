@@ -22,6 +22,9 @@ def get_test():
 def get_root_dir():
     return get_config_value('root_dir')
 
+def get_keys_file():
+    return get_config_value('keys_file')
+
 class ConfigurationIsIncorrectException(Exception):
     def __init__(self, message):
         super(ConfigurationIsIncorrectException, self).__init__()

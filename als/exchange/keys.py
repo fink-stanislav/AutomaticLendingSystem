@@ -1,11 +1,13 @@
 
 import yaml
+import os
 
 from als.util import custom_config as cc
 
 def read_config():
-    filename = '{}/als/keys.yml'.format(cc.get_root_dir())
-
+    filename = cc.get_keys_file()
+    if filename[0] == '~':
+        filename = os.path.expanduser(filename)
     with open(filename, 'r') as myfile:
         yml_data=myfile.read()
 

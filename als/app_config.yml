@@ -5,6 +5,7 @@
 als: &app
   test: test
   root_dir: /home/stas/dev/eclipse_workspace/AutomaticLendingSystem # change this
+  keys_file: ~/.exchange_keys/keys.yml
 
 als_test:
   <<: *app
