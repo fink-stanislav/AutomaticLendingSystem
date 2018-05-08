@@ -6,11 +6,12 @@ import numpy as np
 
 from threading import Thread, Event
 
-from exchange.client.PoloniexLender import PoloniexLenderImpl
 import datetime as dt
 
 import sys
 from urllib2 import URLError
+
+from als.exchange.client.PoloniexLender import PoloniexLenderImpl
 
 urls = (
    '/show_data', 'show_data'

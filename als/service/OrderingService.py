@@ -6,9 +6,8 @@ import datetime as dt
 import pandas as pd
 import numpy as np
 
-from threading import Thread, Event
-
-from exchange.client.PoloniexLender import PoloniexLenderImpl
+from als.util.threads import RepeatThread
+from als.exchange.client.PoloniexLender import PoloniexLenderImpl
 
 urls = (
    '/rates_history', 'rates_history',
@@ -301,36 +300,8 @@ class stats:
     def GET(self):
         return 'stats'
 
-
-class TimerThread(Thread):
-
-    def __init__(self, delay, func):
-        Thread.__init__(self)
-        self.delay = delay
-        self.func = func
-        self.event = Event()
-
-    def run(self):
-        while not self.event.wait(self.delay):
-            try:
-                self.func()
-            except (KeyboardInterrupt, SystemExit):
-                print "Exiting"
-                raise
-            except:
-                print "Unexpected Error"
-
-    def start(self, delay=None):
-        if delay is not None:
-            self.delay = delay
-        self.event = Event()
-        super(TimerThread, self).start()
-
-    def stop(self):
-        self.event.set()
-
-
 if __name__ == "__main__":
-    TimerThread(check_interval, place_order).start()
+    thread = RepeatThread(check_interval, place_order)
+    thread.start()
     app = web.application(urls, globals())
     app.run()
