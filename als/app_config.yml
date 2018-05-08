@@ -3,8 +3,9 @@
 # Config for the application
 # --------------------------
 als: &app
-  temp: test
+  test: test
+  root_dir: /home/stas/dev/eclipse_workspace/AutomaticLendingSystem # change this
 
 als_test:
   <<: *app
-  temp: test
+  test: test

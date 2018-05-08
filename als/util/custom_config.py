@@ -16,8 +16,11 @@ def set_config_value(name, value):
     global global_app_config
     global_app_config[name] = value
 
-def get_temp():
-    return get_config_value('temp')
+def get_test():
+    return get_config_value('test')
+
+def get_root_dir():
+    return get_config_value('root_dir')
 
 class ConfigurationIsIncorrectException(Exception):
     def __init__(self, message):
