@@ -1,0 +1,10 @@
+%YAML 1.2
+---
+# Config for the application
+# --------------------------
+als: &app
+  temp: test
+
+als_test:
+  <<: *app
+  temp: test
