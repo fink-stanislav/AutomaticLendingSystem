@@ -25,6 +25,12 @@ def get_root_dir():
 def get_keys_file():
     return get_config_value('keys_file')
 
+def get_webgui_debug_mode():
+    return get_config_value('webgui_debug')
+
+def get_webgui_port():
+    return get_config_value('webgui_port')
+
 class ConfigurationIsIncorrectException(Exception):
     def __init__(self, message):
         super(ConfigurationIsIncorrectException, self).__init__()
