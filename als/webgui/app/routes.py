@@ -1,6 +1,2 @@
 
-from app import app
-
-@app.route('/')
-def get_time():
-    return 'hello world'
+import dashboard_routes, statistic_routes  # @UnusedImport
