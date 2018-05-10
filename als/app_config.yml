@@ -7,6 +7,9 @@ als: &app
   root_dir: /home/stas/dev/eclipse_workspace/AutomaticLendingSystem # change this
   keys_file: ~/.exchange_keys/keys.yml
 
+  webgui_port: 5010
+  webgui_debug: yes
+
 als_test:
   <<: *app
   test: test
