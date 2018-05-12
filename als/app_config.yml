@@ -7,6 +7,10 @@ als: &app
   root_dir: /home/stas/dev/eclipse_workspace/AutomaticLendingSystem # change this
   keys_file: ~/.exchange_keys/keys.yml
 
+  check_interval: 10
+
+  lending_rate_table_name: lending_rate
+
   webgui_port: 5010
   webgui_debug: yes
 

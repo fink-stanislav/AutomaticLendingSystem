@@ -25,6 +25,12 @@ def get_root_dir():
 def get_keys_file():
     return get_config_value('keys_file')
 
+def get_check_interval():
+    return get_config_value('check_interval')
+
+def get_lending_rate_table_name():
+    return get_config_value('lending_rate_table_name')
+
 def get_webgui_debug_mode():
     return get_config_value('webgui_debug')
 
