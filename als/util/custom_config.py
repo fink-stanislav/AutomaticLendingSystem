@@ -31,11 +31,30 @@ def get_check_interval():
 def get_lending_rate_table_name():
     return get_config_value('lending_rate_table_name')
 
+def get_lending_market_state_table_name():
+    return get_config_value('lending_market_state_table_name')
+
 def get_webgui_debug_mode():
     return get_config_value('webgui_debug')
 
 def get_webgui_port():
     return get_config_value('webgui_port')
+
+def get_exchange_name():
+    return get_config_value('exchange_name')
+
+def get_db_engine():
+    return get_config_value('db_engine')
+
+def get_db_name():
+    return get_config_value('db_name')
+
+def get_db_username():
+    return get_config_value('db_username')
+
+def get_db_password():
+    return get_config_value('db_password')
+
 
 class ConfigurationIsIncorrectException(Exception):
     def __init__(self, message):

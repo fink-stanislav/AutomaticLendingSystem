@@ -17,10 +17,22 @@ def read_config():
 global keys_config
 keys_config = read_config()
 
-def get_keys(name='polo'):
+class KeyIsNotFoundException(Exception):
+    def __init__(self):
+        super(KeyIsNotFoundException, self)
+
+def _get_keys(name='polo'):
     global keys_config
     if keys_config.has_key(name):
         conf = keys_config[name]
         return {'api_key': conf['api_key'], 'secret': conf['secret']}
     else:
-        return {}
+        raise KeyIsNotFoundException()
+
+def get_api_key(name='polo'):
+    result = _get_keys(name=name)
+    return result['api_key']
+
+def get_secret(name='polo'):
+    result = _get_keys(name=name)
+    return result['secret']

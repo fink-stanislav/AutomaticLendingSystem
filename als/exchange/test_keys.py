@@ -1,18 +1,18 @@
 
 import unittest
 
-from als.exchange.keys import get_keys
+from als.exchange.keys import _get_keys
 
 
 class Test(unittest.TestCase):
 
     def test_get_keys_default(self):
-        keys = get_keys()
+        keys = _get_keys()
         self.assertTrue(keys.has_key('api_key'))
         self.assertTrue(keys.has_key('secret'))
 
     def test_get_keys_absent(self):
-        keys = get_keys('absent')
+        keys = _get_keys('absent')
         self.assertTrue(not keys.has_key('api_key'))
         self.assertTrue(not keys.has_key('secret'))
 

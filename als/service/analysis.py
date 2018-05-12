@@ -6,6 +6,8 @@ import pandas as pd
 import numpy as np
 
 from als.exchange.client.poloniex_lender import PoloniexLenderImpl
+from als.exchange import keys
+
 import als.util.date_utils as du
 
 from als.util import custom_config as cc, custom_logging
@@ -14,14 +16,24 @@ logger = custom_logging.get_logger('als.core')
 
 class Analyzer:
 
-    def __init__(self, exchange_name, exchange_api_key, exchange_secret, db_name, db_username, db_password, user_id):
+    def __init__(self):
+        
+        exchange_name = cc.get_exchange_name()
+        exchange_api_key = keys.get_api_key(name=exchange_name)
+        exchange_secret = keys.get_secret(name=exchange_name)
+        db_engine = cc.get_db_engine()
+        db_name = cc.get_db_name()
+        db_username = cc.get_db_username()
+        db_password = cc.get_db_password()
+        user_id = 1
+
         self.exchange_name = exchange_name
-        if exchange_name == 'poloniex':
+        if exchange_name == 'polo':
             self.exchange = PoloniexLenderImpl.authorized(exchange_api_key, exchange_secret)
             self.min_loan = 0.01
-        self.db = web.database(dbn='mysql', db=db_name, user=db_username, pw=db_password)
+        self.db = web.database(dbn=db_engine, db=db_name, user=db_username, pw=db_password)
         self.user_id = user_id
-        
+
         self._adjusted_loans = {}
         self._latest_rate = 0.0
 
@@ -154,7 +166,7 @@ class Analyzer:
         self._latest_rate = weighted_rate
         rate_index = weighted_rate / avg_rate
 
-        self.db.insert('lending_market_state',
+        self.db.insert(cc.get_lending_market_state_table_name(),
                   duration_index=duration_index,
                   rate_index=rate_index,
                   placing_index=placing_index,
@@ -181,7 +193,7 @@ class Analyzer:
         now = du.date_to_ts(dt.datetime.utcnow())
         min_date_ts = now - minutes
         min_date = dt.datetime.utcfromtimestamp(min_date_ts)
-        iterator = self.db.select('lending_market_state', where='date_time>"' + str(min_date) + '"')
+        iterator = self.db.select(cc.get_lending_market_state_table_name(), where='date_time>"' + str(min_date) + '"')
         
         data_source = {}
         for row in iterator:

@@ -1,7 +1,6 @@
 
 import web
 import json
-import sys
 
 from als.util.threads import RepeatThread
 from als.service.analysis import Analyzer, Placer
@@ -18,37 +17,8 @@ urls = (
 )
 
 
-def parse_argv():
-    required_args = ['-dbu', '-dbp', '-dbn', '-d', '-en', '-eak', '-es', '-uid']
-    
-    args = sys.argv[2:]
-    args_dict = {}
-    for arg in args:
-        if arg in required_args:
-            a = arg
-            args_dict[a] = ''
-        else:
-            args_dict[a] = arg
-
-    assert len(args_dict) == len(required_args)
-    return args_dict
-
-
-def create_analyzer():
-    args = parse_argv()
-    exchange_name = args['-en']
-    exchange_api_key = args['-eak']
-    exchange_secret = args['-es']
-    db_name = args['-dbn']
-    db_username = args['-dbu']
-    db_password = args['-dbp']
-    user_id = args['-uid']
-    analyzer = Analyzer(exchange_name, exchange_api_key, exchange_secret, db_name, db_username, db_password, user_id)
-    return analyzer
-
-
 def place_order():
-    analyzer = create_analyzer()
+    analyzer = Analyzer()
     analyzer.evaluate_state(analyzer.adjust_loans())
     signal = analyzer.signal_to_place()
     placer = Placer(analyzer)
@@ -61,11 +31,10 @@ def place_order():
 
 class show_data:
     def GET(self):
-        args_dict = parse_argv()
-        db_name = args_dict['-dbn']
-        db_password = args_dict['-dbp']
-        db_username = args_dict['-dbu']
-        db = web.database(dbn='mysql', db=db_name, user=db_username, pw=db_password)
+        db_name = cc.get_db_name()
+        db_password = cc.get_db_password()
+        db_username = cc.get_db_username()
+        db = web.database(dbn=cc.get_db_engine(), db=db_name, user=db_username, pw=db_password)
         results = db.select(cc.get_lending_rate_table_name(), limit=100)
         
         dicts = {}

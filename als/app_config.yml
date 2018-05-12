@@ -6,10 +6,16 @@ als: &app
   test: test
   root_dir: /home/stas/dev/eclipse_workspace/AutomaticLendingSystem # change this
   keys_file: ~/.exchange_keys/keys.yml
+  exchange_name: polo
 
   check_interval: 10
-
+  
+  db_engine: mysql
+  db_name: ats_db
+  db_username: user
+  db_password: root
   lending_rate_table_name: lending_rate
+  lending_market_state_table_name: lending_market_state
 
   webgui_port: 5010
   webgui_debug: yes
