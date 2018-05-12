@@ -5,7 +5,7 @@ import datetime as dt
 import pandas as pd
 import numpy as np
 
-from als.exchange.client.PoloniexLender import PoloniexLenderImpl
+from als.exchange.client.poloniex_lender import PoloniexLenderImpl
 import als.util.date_utils as du
 
 from als.util import custom_config as cc
