@@ -8,7 +8,9 @@ import numpy as np
 from als.exchange.client.poloniex_lender import PoloniexLenderImpl
 import als.util.date_utils as du
 
-from als.util import custom_config as cc
+from als.util import custom_config as cc, custom_logging
+
+logger = custom_logging.get_logger('als.core')
 
 class Analyzer:
 
@@ -232,7 +234,7 @@ class Placer:
                 self.exchange.createLoanOffer('BTC', loan_size, self.latest_rate)
         except:
             try:
-                print "Trying to place minimal loan due to error"
+                logger.warn("Trying to place minimal loan due to error")
                 self.exchange.createLoanOffer('BTC', self.min_loan, self.latest_rate)
             except:
-                print "Error on placing loan"
+                logger.error("Error on placing loan")

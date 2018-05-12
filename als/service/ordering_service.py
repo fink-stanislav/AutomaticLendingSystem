@@ -6,8 +6,10 @@ import sys
 from als.util.threads import RepeatThread
 from als.service.analysis import Analyzer, Placer
 
-from als.util import custom_config as cc
+from als.util import custom_config as cc, custom_logging
 from als.util import date_utils as du
+
+logger = custom_logging.get_logger('als.core')
 
 urls = (
    '/rates_history', 'rates_history',
@@ -52,10 +54,10 @@ def place_order():
     placer = Placer(analyzer)
     placer.cancel_all_offers()
     if signal:
-        print 'Order is going to be placed'
+        logger.info('Order is going to be placed')
         placer.place()
     else:
-        print 'Order won\'t be placed'
+        logger.info('Order won\'t be placed')
 
 class show_data:
     def GET(self):
